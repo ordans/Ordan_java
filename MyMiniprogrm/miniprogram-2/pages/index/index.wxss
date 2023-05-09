@@ -1,0 +1,80 @@
+.root {
+  border: 1px solid blueviolet;
+  height: 100vh;
+}
+
+.root image {
+  z-index: -2;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(43, 226, 186);
+  height: 60px;
+}
+
+.xing {
+  color: red;
+  margin: 0px 10px;
+}
+
+.text {
+  font-size: 18px;
+  color: aqua;
+}
+
+.input {
+  height: 70%;
+  margin: 0px 18px;
+  border-bottom: 1px solid aqua;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+.radio {
+  color: aqua;
+  margin: 0px 5px 0px 5px;
+  font-size: 18px;
+}
+
+.linked {
+  z-index: 0;
+  position: absolute;
+  right: 25px;
+  background: rgb(68, 75, 72);
+  padding: 3px 10px;
+  color: #fff;
+  border-radius: 8px;
+  height: 20px;
+}
+
+.link {
+  z-index: 2;
+  position: absolute;
+  right: 25px;
+  background: rgb(7, 194, 106);
+  padding: 3px 10px;
+  color: #fff;
+  border-radius: 8px;
+  height: 20px;
+}
+
+.text_c {
+  color: aqua;
+  font-size: 15px;
+  margin: 0px 2px;
+}
+
+.button {
+  margin: 20px 10px;
+  border-radius: 10px;
+  width: 100%;
+  text-align: center;
+  height: 40px;
+  background: linear-gradient(#1f3fa8, #20aaaa, #cea36a);
+}
+

@@ -1,0 +1,85 @@
+<view class="root">
+  <image src="../../image/index-img/2.webp.jpg" />
+
+  <!-- 第一行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <text class="text">真实姓名：</text>
+    <input placeholder="请输入姓名" bindinput="setUsername" class="input" />
+  </view>
+
+  <!-- 第二行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <text class="text">性别：</text>
+    <radio-group class="radio" bindchange="setSex">
+      <radio value="boy" checked="ture"></radio>男
+      <radio value="girl"></radio>女
+    </radio-group>
+  </view>
+
+  <!-- 第三行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <text class="text">手机号码：</text>
+    <input placeholder="请输入手机号码" maxlength="11" bindinput="setMobile" class="input" />
+  </view>
+
+  <!-- 第四行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <!-- <text class="text">所属院校：</text> -->
+    <input placeholder="验证码:" bindinput="setYzm" class="input" />
+    <view class="{{sendCss}}" bindtap="send">
+      {{sendText}}
+    </view>
+  </view>
+
+  <!-- 第五行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <!-- <text class="text">所属院校：</text> -->
+    <picker mode="selector" range="{{school}}" bindchange="xz">
+      <view class="text">所属院校：{{school[schoolIndex]}}</view>
+    </picker>
+  </view>
+
+  <!-- 第六行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <!-- <text class="text">所属院校：</text> -->
+    <picker mode="selector" range="{{classList}}" bindchange="cl">
+      <view class="text">专业班级：{{classList[classIndex]}}</view>
+    </picker>
+  </view>
+
+  <!-- 第七行 -->
+  <view class="row">
+    <text class="xing">*</text>
+    <!-- <text class="text_c">课程方向：</text> -->
+    <radio-group bindchange="setCourse" class="radio">
+      <radio value="前端开发" checked="true" />前端开发
+      <radio value="后端开发" />后端开发
+      <radio value="运维网安" />运维网安
+    </radio-group>
+    <!-- <checkbox class="text_c">java</checkbox>
+    <checkbox class="text_c">运维</checkbox>
+    <checkbox class="text_c">网安</checkbox>
+    <checkbox class="text_c">前端</checkbox> -->
+  </view>
+
+  <!-- 第八行 -->
+  <!-- <view class="row">
+    <text class="xing">*</text>
+    <picker mode="region" range="{{region}}" bindchange="gp">
+      <view class="text">籍贯：<text wx:for="{{region}}">{{item}}</text></view>
+    </picker>
+  </view> -->
+
+  <view>
+    <!-- bindtap用户手指触碰时触发 -->
+    <button class="button" bindtap="tijiao">确定报名</button>
+  </view>
+
+
+</view>
