@@ -7,4 +7,23 @@
        http://www.springframework.org/schema/context
        https://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="com.ordan.portal.biz"></context:component-scan>
+
+<!--        spring加载数据源配置文件dataSource.properties-->
+    <context:property-placeholder location="classpath:dataSource.properties" system-properties-mode="NEVER"></context:property-placeholder>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driver}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="username" value="${uid}"></property>
+        <property name="password" value="${pwd}"></property>
+    </bean>
+
+<!--    会话工厂-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <bean id="mapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ordan.portal.dao"></property>
+    </bean>
 </beans>
