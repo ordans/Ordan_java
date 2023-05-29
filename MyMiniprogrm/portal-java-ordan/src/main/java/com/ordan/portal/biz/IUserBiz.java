@@ -14,7 +14,7 @@ public interface IUserBiz {
      * @param user 用户各项数据
      * @return boolean 成功为true,失败为false
      */
-    public boolean add(Userinfo user);
+    public int add(Userinfo user);
 
 
 

@@ -11,8 +11,15 @@ public class UserBizimpl implements IUserBiz{
     private IUserDao userDao;
 
     @Override
-    public boolean add(Userinfo user) {
+    public int add(Userinfo user) {
+        //先检查此用户信息中的手机号码是否被使用
+        int rows = userDao.findByMobile(user.getMobile());
+        if( rows > 0 ){
+            return 10001;
+        }
         int count = userDao.add(user);
-        return count > 0;
+        return count > 0 ? 0 : 30001;
     }
+
+
 }

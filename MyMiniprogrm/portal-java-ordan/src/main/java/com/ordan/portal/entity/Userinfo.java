@@ -12,7 +12,7 @@ public class Userinfo {
     private boolean sex;
     private int school;
     private int banji;
-    private String  course;
+    private String course;
 
     public int getUserid() {
         return userid;

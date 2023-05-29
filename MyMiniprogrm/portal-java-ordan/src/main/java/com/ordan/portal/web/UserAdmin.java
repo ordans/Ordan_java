@@ -3,6 +3,7 @@ package com.ordan.portal.web;
 import com.alibaba.fastjson.JSONObject;
 import com.ordan.portal.biz.IUserBiz;
 import com.ordan.portal.entity.Userinfo;
+import com.ordan.portal.util.PortUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -51,13 +52,10 @@ public class UserAdmin {
         user.setBanji(1);
         user.setCourse(course);
 
-        boolean r = userBizImpl.add(user);
-        if ( !r ){
-            json.put("code",-10001);
-            json.put("msg","报名失败");
-        }
-
-        return json;
+        int r = userBizImpl.add(user);
+            json.put("code",r);
+            json.put("msg", PortUtil.getValue(r));
+            return json;
     }
 
 }
