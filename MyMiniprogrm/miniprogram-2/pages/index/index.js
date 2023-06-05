@@ -4,11 +4,14 @@ const app = getApp()
 
 Page({
   data: {
-    school: ['广东理工学院', '峰峰幼儿园', '坤坤大学', '蓝天大学'],
+    schoolList: null, //保存查询出来的 学校 对象集合
+    banjiList: null, //保存查询出来的 班级 对象集合
+
+    school: [],
     selectedSchool: '广东理工学院',
     schoolIndex: 0, //初始选中的项索引
 
-    classList: ['软工1班', '软工2班', '软工3班'], //模拟后台查出来的班级列表
+    classList: [], //模拟后台查出来的班级列表
     classIndex: 0, //初始选中
 
     selectedClass: '软工1班',
@@ -181,7 +184,9 @@ Page({
 
   post() {
     //发网络请求
-    let host = 'http://10.60.159.39:8080/ordan.com/user/add.mvc'
+    // let host = 'http://10.60.159.39:8080/ordan.com/user/add.mvc'
+    let host = 'http://localhost:8080/ordan.com/user/add.mvc'
+
     // let host = 'http://10.60.159.126:8080/tiancai.com/user/add.do'
 
     wx.request({
@@ -199,35 +204,80 @@ Page({
         // 'course': this.data.course,
         // 'sex': this.data.sex,
 
-        'realName':this.data.realName,
-        'Mobile':this.data.Mobile,
-        'Yzm':this.data.Yzm,
-        'school':this.data.school[this.data.schoolIndex],
-        'classList':this.data.classList[this.data.classIndex],
-        'course':this.data.course,
-        'sex':this.data.sex,
+        'realName': this.data.realName,
+        'Mobile': this.data.Mobile,
+        'Yzm': this.data.Yzm,
+        'school': this.data.school[this.data.schoolIndex],
+        'classList': this.data.classList[this.data.classIndex],
+        'course': this.data.course,
+        'sex': this.data.sex,
 
       },
 
-      success : res => {
-      let httpcode = res.statusCode //网络请求的http状态码
-      if(httpcode == 200){
-        let code = res.data.code //业务状态码
-        let msg = res.data.msg //业务处理完成后的消息
-        
-        if(code == 0){
-          this.tankuang('报名成功')
-        }else {
-          this.tankuang('报名失败：' + msg)
+      success: res => {
+        let httpcode = res.statusCode //网络请求的http状态码
+        if (httpcode == 200) {
+          let code = res.data.code //业务状态码
+          let msg = res.data.msg //业务处理完成后的消息
+
+          if (code == 0) {
+            this.tankuang('报名成功')
+          } else {
+            this.tankuang('报名失败：' + msg)
+          }
+        } else {
+          this.tankuang('网络异常或服务器故障，请联系服务提供商')
         }
-      }else{
-        this.tankuang('网络异常或服务器故障，请联系服务提供商')
-      }
-      },//当调用成功后，服务器会把返回的结果送到res对象中
+      }, //当调用成功后，服务器会把返回的结果送到res对象中
       // statusCode = 200
     })
   },
 
+  onLoad() { //生命周期函数，当页面加载完成时，自动调用
+    let url = 'http://localhost:8080/ordan.com/school/all.mvc'
+    wx.request({
+      url: url,
+      method: 'GET',
+      data: {},
+      success: res => {
+        // console.log("res=" + JSON.stringify(res));
+        let list = res.data.list
+        let temp = []
+        for (let i = 0; i < list.length; i++) {
+          temp.push(list[i].name)
+        }
+        this.setData({
+          school: temp,
+          schoolList: list
+        })
+        let sid = list[0].schoolid //得到第一个学校的id 以他为条件，查询所有班级
+        this.findBySid(sid) //交给另一个函数去完成
+      }
+    })
+  },
 
+  findBySid(sid) {
+    let url = 'http://localhost:8080/ordan.com/banji/sid.mvc'
+    wx.request({
+      url : url,
+      method : 'GET',
+      header : {},
+      data: { 'sid' : sid },
+      success : res => {
+        // console.log("ban=" + JSON.stringify(res));
+        let list = res.data.list
+        let temp = []
+        for (let i = 0; i < list.length; i++) {
+          temp.push(list[i].name)
+        }
+        this.setData({
+          classList: temp,
+          banjiList: list
+        })
+      }
+    })
+
+
+  },
 
 })
