@@ -1,5 +1,6 @@
 package com.ordan.portal.web;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ordan.portal.biz.IUserBiz;
 import com.ordan.portal.entity.Userinfo;
@@ -19,12 +20,20 @@ public class UserAdmin {
     @Autowired
     private IUserBiz userBizImpl;
 
+    @ResponseBody //声明向客户端返回结果为JSON格式
+    @RequestMapping(value = "/send.mvc",produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
+    public JSONObject send(@RequestParam("mobile") String mobile){
+        String str = PortUtil.send(mobile,"");
+        JSONObject json = JSONObject.parseObject(str);
+        return json;
+    }
+
 //    ?realName=&Mobile=&sex=&Yzm=&school=&classList=&course=
     @ResponseBody //声明向客户端返回结果为JSON格式
     @RequestMapping(value = "/add.mvc",produces = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8")
     public JSONObject register(
             @RequestParam("realName")   String name,
-            @RequestParam("Mobile")     String mobile,
+            @RequestParam("mobile")     String mobile,
             @RequestParam("sex")        String sex,
             @RequestParam("Yzm")        String yzm,
             @RequestParam("school")     String school,
