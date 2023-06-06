@@ -37,9 +37,12 @@ Page({
   xz(e) {
     let i = e.detail.value //取得当前被选的项的索引（下标）
     this.setData({
-      schoolIndex: i,
+      schoolIndex : i,
+      classIndex : 0, //每换一次学校，班级索引归0
       selectedSchool: this.data.school[i]
     })
+    let sid = this.data.schoolList[i].schoolid //选中的学校的id
+    this.findBySid(sid) //刷新班级数据
   },
 
   cl(e) {
@@ -186,16 +189,20 @@ Page({
     //发网络请求
     // let host = 'http://10.60.159.39:8080/ordan.com/user/add.mvc'
     let host = 'http://localhost:8080/ordan.com/user/add.mvc'
-
     // let host = 'http://10.60.159.126:8080/tiancai.com/user/add.do'
-
     wx.request({
       url: host,
       method: 'POST',
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+      header: {'Content-Type': 'application/x-www-form-urlencoded'},
       data: {
+        'realName': this.data.realName,
+        'Mobile': this.data.Mobile,
+        'Yzm': this.data.Yzm,
+        'school': this.data.schoolList[this.data.schoolIndex].schoolid,
+        'classList': this.data.banjiList[this.data.classIndex].banjiid,
+        'course': this.data.course,
+        'sex': this.data.sex,
+        
         // 'realname': this.data.realName,
         // 'mobile': this.data.Mobile,
         // 'yzm': this.data.Yzm,
@@ -203,15 +210,6 @@ Page({
         // 'banji': this.data.classList[this.data.classIndex],
         // 'course': this.data.course,
         // 'sex': this.data.sex,
-
-        'realName': this.data.realName,
-        'Mobile': this.data.Mobile,
-        'Yzm': this.data.Yzm,
-        'school': this.data.school[this.data.schoolIndex],
-        'classList': this.data.classList[this.data.classIndex],
-        'course': this.data.course,
-        'sex': this.data.sex,
-
       },
 
       success: res => {
@@ -259,11 +257,13 @@ Page({
   findBySid(sid) {
     let url = 'http://localhost:8080/ordan.com/banji/sid.mvc'
     wx.request({
-      url : url,
-      method : 'GET',
-      header : {},
-      data: { 'sid' : sid },
-      success : res => {
+      url: url,
+      method: 'GET',
+      header: {},
+      data: {
+        'sid': sid
+      },
+      success: res => {
         // console.log("ban=" + JSON.stringify(res));
         let list = res.data.list
         let temp = []

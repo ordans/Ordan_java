@@ -40,7 +40,9 @@
     <text class="xing">*</text>
     <!-- <text class="text">所属院校：</text> -->
     <picker mode="selector" range="{{school}}" bindchange="xz">
-      <view class="text">所属院校：{{school[schoolIndex]}}</view>
+      <view class="text">
+      所属院校：{{school[schoolIndex]}}
+      </view>
     </picker>
   </view>
 
