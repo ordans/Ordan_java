@@ -44,12 +44,33 @@ public class UserAdmin {
         json.put("code",0); //业务状态码
         json.put("msg","抓到你啦！小黑子");
 
+
+        int sid = 0; //转换有异常
+        try {
+            //将string类型转换为int型数据
+            sid = Integer.parseInt(school);
+        } catch (NumberFormatException e) {
+            json.put("code",10002);
+            json.put("msg",PortUtil.getValue(10002));
+            return json;
+        }
+
+
+        int bid = 0;
+        try {//修改班级数据检查异常
+            bid = Integer.parseInt(classlist);
+        } catch (NumberFormatException e) {
+            json.put("code",10002);
+            json.put("msg",PortUtil.getValue(10003));
+            return json;
+        }
+
         Userinfo user = new Userinfo();
         user.setRealname(name);
         user.setMobile(mobile);
         user.setSex(sex.equals("男"));
-        user.setSchool(1);
-        user.setBanji(1);
+        user.setSchool(sid);
+        user.setBanji(bid);
         user.setCourse(course);
 
         int r = userBizImpl.add(user);

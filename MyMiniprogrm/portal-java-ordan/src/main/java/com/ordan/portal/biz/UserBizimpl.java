@@ -17,7 +17,13 @@ public class UserBizimpl implements IUserBiz{
         if( rows > 0 ){
             return 10001;
         }
-        int count = userDao.add(user);
+        int count = 0;
+
+        try {
+             count = userDao.add(user);
+        }catch (Exception e){
+            return 30001;
+        }
         return count > 0 ? 0 : 30001;
     }
 

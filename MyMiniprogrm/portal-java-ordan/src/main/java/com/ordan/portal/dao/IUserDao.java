@@ -20,7 +20,7 @@ public interface IUserDao {
      */
     @Insert("INSERT INTO tbl_javab_user(realname,mobile,sex,school,banji,course) " +
             "VALUES(#{realname},#{mobile},#{sex},#{school},#{banji},#{course})")
-    int add(Userinfo user);
+    int add(Userinfo user)throws Exception;//抛异常
 
     /**
      * 根据手机号码查询用户表
