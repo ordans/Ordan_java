@@ -25,7 +25,7 @@ Page({
 
     realName: '', //保存用户的姓名
 
-    Mobile: '', //保存用户手机号码
+    mobile: '', //保存用户手机号码
 
     Yzm: '', //保存用户填写的验证码
 
@@ -64,9 +64,18 @@ Page({
       sendCss: 'linked',
       sendText: '59秒后重新获取',
     })
-    //开启定时器
+    //开启定时器(每隔一秒执行一次某个函数)
     this.data.timer = setInterval(this.bian, 1000)
-
+    
+    wx.request({
+      url : 'http://localhost:8080/ordan.com/user/send.mvc',
+      method : 'POST',
+      header : {'Content-Type' : 'application/x-www-form-urlencoded'},
+      data : {'mobile' : this.data.mobile},
+      success : res=>{
+        console.log(res)
+      }
+    })
   },
 
   bian() {
@@ -100,7 +109,7 @@ Page({
     let value = e.detail.value
     // console.log(value);
     this.setData({
-      Mobile: value,
+      mobile: value,
     })
   },
 
@@ -140,7 +149,7 @@ Page({
 
   checkMobile() {
     let rge = /^1[3456789]\d{9}$/
-    return rge.test(this.data.Mobile)
+    return rge.test(this.data.mobile)
   },
 
   checkYzm() {
@@ -176,7 +185,7 @@ Page({
   print() {
     console.log("姓名：" + this.data.realName);
     console.log("性别：" + this.data.sex);
-    console.log("手机号：" + this.data.Mobile);
+    console.log("手机号：" + this.data.mobile);
     console.log("验证码：" + this.data.Yzm);
     console.log("学校：" + this.data.school[this.data.schoolIndex]);
     console.log("班级：" + this.data.classList[this.data.classIndex]);
@@ -196,7 +205,7 @@ Page({
       header: {'Content-Type': 'application/x-www-form-urlencoded'},
       data: {
         'realName': this.data.realName,
-        'Mobile': this.data.Mobile,
+        'mobile': this.data.mobile,
         'Yzm': this.data.Yzm,
         'school': this.data.schoolList[this.data.schoolIndex].schoolid,
         'classList': this.data.banjiList[this.data.classIndex].banjiid,
@@ -204,7 +213,7 @@ Page({
         'sex': this.data.sex,
         
         // 'realname': this.data.realName,
-        // 'mobile': this.data.Mobile,
+        // 'mobile': this.data.mobile,
         // 'yzm': this.data.Yzm,
         // 'school': this.data.school[this.data.schoolIndex],
         // 'banji': this.data.classList[this.data.classIndex],
